@@ -1,0 +1,25 @@
+
+QPushButton{
+    background-color: sienna;
+    min-height: 27px;
+    font-size:20px;
+}
+
+QLabel{
+    min-height: 27px;
+    font-size:20px;
+    background-color: green;
+}
+
+QLineEdit{
+    min-height: 27px;
+    font-size:20px;
+}
+
+QComboBox{
+    min-height: 27px;
+    font-size:20px;
+    border:1px
+
+}
+

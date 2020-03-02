@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <title>Title</title>
+</head>
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=44a79f6c034d8181a4df4e84dd9eba6b&plugin=AMap.Geocoder"></script>
+<body>
+    <div id="map" style="height: 600px; width: 100%"></div>
+    <script type="text/javascript">
+        let map = new AMap.Map("map");
+        window.lat = 0.0;
+        window.lng = 0.0;
+        window.address = ""
+        //查询地点
+        function search_place(keyword) {
+          map.plugin("AMap.PlaceSearch", function(){
+            let placeSearch = new AMap.PlaceSearch({
+              city: "022",
+              citylimit: true,
+              pageSize: 1
+            });
+            placeSearch.search(keyword, function(status, result){
+              let location = result.poiList.pois[0].location
+              create_marker(location.lng, location.lat);
+            })
+          })
+        }
+        //描点方法
+        function create_marker(lng, lat) {
+          var marker = new AMap.Marker({
+              position: new AMap.LngLat(lng, lat),
+          });
+          map.clearMap();  //清除所有覆盖物
+          map.add(marker)
+          map.setCenter([lng, lat])
+          map.setZoom(17)
+          get_address_name([lng, lat])
+          window.lat = lat;
+          window.lng = lng;
+        }
+        //根据经纬度返回信息
+        function get_address_name(lnglat) {
+          var geocoder = new AMap.Geocoder({city: '022'});
+          let address = geocoder.getAddress(lnglat, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+              window.address = result.regeocode.formattedAddress;
+            }
+          })
+        }
+        //监听鼠标点击事件
+        map.on("click", function(event){
+          console.log(event);
+          lng = event.lnglat.getLng()
+          lat = event.lnglat.getLat()
+          create_marker(lng, lat)
+        })
+        //返回经纬度
+        function get_location(){
+            return {
+              "address": window.address,
+              "lat": window.lat,
+              "lng": window.lng
+            }
+        }
+        
+    </script>
+</body>
+</html>
