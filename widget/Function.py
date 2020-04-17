@@ -31,7 +31,7 @@ anyou_list = [
 def send_sms(code):
     from aliyunsdkcore.client import AcsClient
     from aliyunsdkcore.request import CommonRequest
-    client = AcsClient('LTAIUEMmNsFD8pWV', 'HnumsfabRRqemzy0VEjFjrYB6lgH0s', 'cn-hangzhou')
+    client = AcsClient('', '', 'cn-hangzhou')
 
     request = CommonRequest()
     request.set_accept_format('json')
